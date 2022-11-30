@@ -1,10 +1,110 @@
 under construction
 <!--
-    <!DOCTYPE html>
-    <html>
+<!DOCTYPE html>
+<html>
+    <style>
+        #myDiv {
+            border: 3px dashed orange;
+        }
+    </style>
     <body>
-    <h1> Mechnistic Nanopore Analysis </h1>
-    <hr>
-    <h2> Preprocessing </h2>
+        <h1> Mechnistic Models on Sequencing Data </h1>
+        <hr>
+        <h2> Preprocessing </h2>
+        <pre>
+            
+            1. Illumina
+            2. Nanopore
+            
+            <label for="guppy_protocol"> raw signal basecalling - decomplexing - debarcoding - alignment:</label>
+            <div id="myDiv">
+                guppy_basecaller -c configuration_file  --barcode_kits library -i input_fast5 -s orgnized_output --align_ref reference_genome  -x GPU_setting --records_per_fastq 0 --compress_fastq
+            </div>
+            
+            3. SAM/Bam Generation
+            
+            <label for="sam2bam"> sam2bam:</label>
+            <div id="myDiv">
+                samtools view -H *bam > allSeq.sam
+                find ./ -name \*.bam -exec samtools view {} \; >> allSeq.sam
+                samtools view -bh allSeq.sam > allSeq.bam
+            </div>
+            
+            4. Format conversion on sequencing files
+            
+            <label for="fasta2bam&cram">fasta2bam&cram:</label>
+            <div id="myDiv">
+                samtools view -T input.fasta -C -o output.cram output.bam
+            </div>
+            
+            <label for="bam2bedgraph">fasta2cram:</label>
+            <div id="myDiv">
+                bedtools genomecov -bg -ibam bam_input -g reference > output_bedGraph
+            </div>
+            
+            <label for="bedgraph2bigwig">bedgraph2bigwig:</label>
+            <div id="myDiv">
+                bedGraph2bigWig input.sort.bam chrome.size output.bw
+            </div>
+            
+        </pre>
+        </p>
+        <h2> Visulization and Filtering </h2>
+        
+        
+        <h3>File Select</h3>
+        <label>Select Input Bam1 File: <span class="important">*</span></label>
+        <input type="file" id="Bam-load" />
+        <br />
+        <label>Select Input Bam2 File: (optional) </label>
+        <input type="file" id="Bam-load" />
+        <br />
+        <label>Select Ref FASTA File: <span class="important">*</span></label>
+        <input type="file" id="fasta-load" />
+        
+        <div id="options">
+            <h3>BAM Visulization</h3>
+            
+            <h4> Scaling Options</h4>
+            <div>
+                <input type="radio" id="linear-option" name="yaxis" checked="true" />
+                <label for="linear-option">Count (Y-axis Linear Scale)</label>
+            </div>
+            <div>
+                <input type="radio" id="log-option" name="yaxis" />
+                <label for="log-option">Count (Y-axis Log Scale)</label>
+            </div>
+            <div>
+                <input type="radio" id="x-binning" name="yaxis" />
+                <label for="x-binning">X-axis binning</label>
+            </div>
+            <h4>Range of Data</h4>
+            <div id="range-selector">
+                <span>Range: </span>
+                <input type="number" id="lower-bound" min="0" max="0" />
+                <span>-</span>
+                <input type="number" id="upper-bound" min="0" max="0" />
+            </div>
+            <br />
+            <button id="load-files">Load Figure</button>
+            <br />
+            <p>
+            "linked Figure Panel under developement"
+            </p>
+            
+            <h2> Downstream Pipeline </h2>
+            <p>
+            "Under developement"
+            </p>
+            
+            <h2> References </h2>
+            <p><a href="https://community.nanoporetech.com/protocols/Guppy-protocol">1. Guppy-protocol</a></p>
+            <p><a href="https://htslib.org">2. Samtools </a></p>
+            <p><a href="https://bedtools.readthedocs.io/en/latest/">3. bedtools </a></p>
+            <p><a href="https://www.encodeproject.org/software/bedgraphtobigwig/">4. bedgraphtobigwig </a></p>
+            
+    </body>
+</html>
+
 -->
   
